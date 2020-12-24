@@ -15,10 +15,9 @@ public class MyClient {
     public static MqttClient client;
 
     private static String HOST = "tcp://127.0.0.1:1883";
-    private static String clientid = "YLClient";
+    private static String clientid = "CKClient";
     private static String userName = "admin";
     private static String passWord = "password";
-    private static String TOPIC = "YLTOPIC";
 
 
     public MyClient() throws MqttException {
@@ -46,17 +45,7 @@ public class MyClient {
         }
     }
 
-    public static MqttTopic getMqttTopic(String topic) {
-        return client.getTopic(TOPIC);
-    }
-
-    public static void publish(MqttTopic topic, MqttMessage message) throws MqttException {
-        log.info("TOPIC:" + topic.toString());
-        log.info("MESSAGE:" + message.toString());
-        // 发布的方法
-        MqttDeliveryToken token = topic.publish(message);
-        // 发布
-        token.waitForCompletion();
-        log.info("message is published completely! "  + token.isComplete());
+    public static MqttDeliveryToken publish(String topic, MqttMessage message) throws MqttException {
+        return client.getTopic(topic).publish(message);
     }
 }
