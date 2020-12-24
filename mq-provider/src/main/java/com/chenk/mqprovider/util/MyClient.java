@@ -1,5 +1,6 @@
 package com.chenk.mqprovider.util;
 
+import com.chenk.mqprovider.pojo.MyMqttMessage;
 import com.chenk.mqprovider.pojo.PushCallback;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
@@ -45,7 +46,7 @@ public class MyClient {
         }
     }
 
-    public static MqttDeliveryToken publish(String topic, MqttMessage message) throws MqttException {
+    public static MqttDeliveryToken publish(String topic, MyMqttMessage message) throws MqttException {
         return client.getTopic(topic).publish(message);
     }
 }
