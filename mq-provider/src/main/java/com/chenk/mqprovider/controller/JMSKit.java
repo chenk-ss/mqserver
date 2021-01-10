@@ -1,9 +1,5 @@
 package com.chenk.mqprovider.controller;
 
-/**
- * @Author chenk
- * @create 2020/12/24 14:27
- */
 import java.util.Scanner;
 
 import javax.jms.Connection;
@@ -18,9 +14,8 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 /**
  * 通过JMS发送activeMQT消息，从而实现点对点发送
- * @author 李刚
- * @version 1.0, 2020年1月4日
- *
+ * @Author chenk
+ * @create 2020/12/24 14:27
  */
 public class JMSKit {
     private static final String PTP_CLIENTID = "PTP_CLIENTID";

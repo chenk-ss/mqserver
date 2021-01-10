@@ -1,4 +1,4 @@
-package com.chenk.mqprovider.pojo;
+package pojo;
 
 import lombok.Data;
 

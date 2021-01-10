@@ -1,4 +1,4 @@
-package com.chenk.mqprovider.pojo;
+package pojo;
 
 import lombok.Data;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -12,4 +12,9 @@ import java.util.Map;
 @Data
 public class MyMqttMessage extends MqttMessage {
     private Map<String, Object> properties;
+
+    public MyMqttMessage(int Qos, Boolean retain) {
+        setQos(Qos);
+        setRetained(retain);
+    }
 }

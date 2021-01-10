@@ -1,4 +1,4 @@
-package com.chenk.mqprovider.pojo;
+package pojo;
 
 import lombok.Data;
 
@@ -11,4 +11,10 @@ public class Result<T> {
     private String message;
     private Boolean success;
     private T data;
+
+    public Result(String message, Boolean success, T data) {
+        this.message = message;
+        this.success = success;
+        this.data = data;
+    }
 }
