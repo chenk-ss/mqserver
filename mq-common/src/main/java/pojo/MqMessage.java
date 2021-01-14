@@ -11,4 +11,5 @@ public class MqMessage {
     private String topic;
     private String message;
     private String clientId;
+    private Boolean retain;
 }

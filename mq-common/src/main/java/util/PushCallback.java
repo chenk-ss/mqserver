@@ -3,6 +3,7 @@ package util;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 @Slf4j
@@ -12,7 +13,18 @@ public class PushCallback implements MqttCallback {
     public void connectionLost(Throwable e) {
         // 连接丢失后，一般在这里面进行重连  
         log.error("连接断开，可以做重连");
-
+        while (!MyClient.isConnected()) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            log.error("---reconnect---");
+            MyClient.reconnect();
+            MyClient.consume(MyClient.clientid);
+            log.error("---reconnect success---");
+            break;
+        }
     }
 
     @Override

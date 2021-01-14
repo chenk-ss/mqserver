@@ -7,10 +7,9 @@ import util.MyClient;
  * @Author chenk
  * @create 2021/1/10 17:43
  */
-public class Main {
+public class Consumer {
 
     public static void main(String[] args) throws MqttException {
-        new MyClient("CK2");
-        MyClient.consume("CKTOPIC");
+        new MyClient("CKConsumerTest").consume("CKTopicTest");
     }
 }

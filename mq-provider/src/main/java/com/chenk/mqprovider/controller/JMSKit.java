@@ -18,7 +18,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @create 2020/12/24 14:27
  */
 public class JMSKit {
-    private static final String PTP_CLIENTID = "PTP_CLIENTID";
+    private static final String PTP_CLIENTID = "111";
     private ActiveMQConnectionFactory factory;
     private Connection connection;
     private Session session;
@@ -107,9 +107,9 @@ public class JMSKit {
             JMSKit kit = new JMSKit();
             kit.connect("tcp://localhost:61616", "");
             if(clientId==null) {
-                kit.publish("hello", msg, 2, false);
+                kit.publish("CKTOPIC", msg, 2, false);
             }else {
-                kit.publish("hello", msg, 2, true, clientId);
+                kit.publish("CKTOPIC", msg, 2, true, clientId);
             }
             kit.disconnect();
 

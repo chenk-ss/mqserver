@@ -23,7 +23,7 @@ public class MessageController {
 
     @PostMapping(value = "/send")
     public Result<String> publishTopic(@RequestBody MqMessage mqMessage) throws MqttException {
-        MyMqttMessage mqttMessage = new MyMqttMessage(2, true);
+        MyMqttMessage mqttMessage = new MyMqttMessage(1, true);
         mqttMessage.setPayload(mqMessage.getMessage().getBytes());
         if (!"".equals(mqMessage.getClientId())) {
             Map map = new HashMap<>();

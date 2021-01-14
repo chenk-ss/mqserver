@@ -15,8 +15,8 @@ public class MyStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("loading……");
+        log.info("---loading---");
         new MyClient();
-        log.info("loading over……");
+        log.info("---loading success---");
     }
 }
