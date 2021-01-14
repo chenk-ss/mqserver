@@ -26,27 +26,18 @@ public class MyClient {
     private static String passWord = "password";
 
 
-    public MyClient(){
+    public MyClient(boolean retained){
         try {
-            client = new MqttClient(HOST, clientid, new MemoryPersistence());
+            client = retained ? new MqttClient(HOST, clientid, new MemoryPersistence()) : new MqttClient(HOST, clientid);
         } catch (MqttException e) {
             e.printStackTrace();
         }
         connect();
     }
 
-    public MyClient(String clientid){
+    public MyClient(String clientid, boolean retained){
         this.clientid = clientid;
-        new MyClient();
-    }
-
-    public static void reconnect() {
-        try {
-            client = new MqttClient(HOST, clientid, new MemoryPersistence());
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-        connect();
+        new MyClient(retained);
     }
 
     public static Boolean isConnected() {

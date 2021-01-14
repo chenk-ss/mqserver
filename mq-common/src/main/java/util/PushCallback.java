@@ -11,7 +11,7 @@ public class PushCallback implements MqttCallback {
 
     @Override
     public void connectionLost(Throwable e) {
-        // 连接丢失后，一般在这里面进行重连  
+        // 连接丢失后，在这里面进行重连
         log.error("连接断开，可以做重连");
         while (!MyClient.isConnected()) {
             try {
@@ -20,10 +20,14 @@ public class PushCallback implements MqttCallback {
                 ex.printStackTrace();
             }
             log.error("---reconnect---");
-            MyClient.reconnect();
-            MyClient.consume(MyClient.clientid);
-            log.error("---reconnect success---");
-            break;
+            try {
+                MyClient.client.reconnect();
+                log.info("---reconnect success---");
+                break;
+            } catch (MqttException ex) {
+                log.error("---reconnect failed---");
+                ex.printStackTrace();
+            }
         }
     }
 

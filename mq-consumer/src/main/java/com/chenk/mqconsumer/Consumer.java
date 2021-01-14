@@ -1,6 +1,5 @@
 package com.chenk.mqconsumer;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import util.MyClient;
 
 /**
@@ -9,7 +8,7 @@ import util.MyClient;
  */
 public class Consumer {
 
-    public static void main(String[] args) throws MqttException {
-        new MyClient("CKConsumerTest").consume("CKTopicTest");
+    public static void main(String[] args) {
+        new MyClient("CKConsumerTest", true).consume("CKTopicTest");
     }
 }
