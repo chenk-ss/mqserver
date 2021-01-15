@@ -1,5 +1,6 @@
 package util;
 
+import com.google.gson.Gson;
 import listener.MyIMqttMessageListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,12 @@ public class MyClient {
 
     public static MqttClient client;
 
+    static Gson GSON = new Gson();
+
     private static String HOST = "tcp://127.0.0.1:1883";
     public static String clientid = "CK1";
     private static String userName = "admin";
-    private static String passWord = "password";
+    private static String passWord = "a123";
 
 
     public MyClient(boolean retained){
@@ -61,12 +64,18 @@ public class MyClient {
             client.connect(options);
         } catch (Exception e) {
             e.printStackTrace();
-            connect();
+//            connect();
         }
     }
 
-    public static MqttDeliveryToken publish(String topic, MyMqttMessage message) throws MqttException {
-        return client.getTopic(topic).publish(message.getPayload(), message.getQos(), message.isRetained());
+    public static MqttDeliveryToken publish(String topic, MyMqttMessage message){
+        try {
+            log.info("message:{}" + GSON.toJson(message));
+            return client.getTopic(topic).publish(message.getPayload(), message.getQos(), message.isRetained());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void consume(String topic){
