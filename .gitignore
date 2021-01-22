@@ -1,2 +1,10 @@
 /.idea/
 /mqserver.iml
+/mq-common/target/classes/
+/mq-common/mq-common.iml
+/mq-provider/.mvn/wrapper/
+/mq-consumer/target/
+/mq-provider/mvnw.cmd
+/mq-provider/mvnw
+/mq-consumer/mqconsumer.iml
+/.gitignore

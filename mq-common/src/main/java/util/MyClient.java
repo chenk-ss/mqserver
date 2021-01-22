@@ -19,35 +19,39 @@ import pojo.MyMqttMessage;
 @Slf4j
 public class MyClient {
 
-    public static MqttClient client;
-
     static Gson GSON = new Gson();
 
-    private static String HOST = "tcp://127.0.0.1:1883";
-    public static String clientid = "CK1";
-    private static String userName = "admin";
-    private static String passWord = "a123";
+    private MqttClient client;
+    private String HOST = "tcp://127.0.0.1:1883";
+    public String clientid = "CK1";
+    private String userName = "admin";
+    private String passWord = "a123";
 
-
-    public MyClient(boolean retained){
+    public MyClient(boolean retained) {
         try {
-            client = retained ? new MqttClient(HOST, clientid, new MemoryPersistence()) : new MqttClient(HOST, clientid);
+            this.client = retained ? new MqttClient(HOST, clientid, new MemoryPersistence()) : new MqttClient(HOST, clientid);
         } catch (MqttException e) {
             e.printStackTrace();
         }
         connect();
     }
 
-    public MyClient(String clientid, boolean retained){
-        this.clientid = clientid;
-        new MyClient(retained);
+    public MyClient(String clientid, boolean retained) {
+//        this.clientid = clientid;
+//        new MyClient(retained);
+        try {
+            this.client = retained ? new MqttClient(HOST, clientid, new MemoryPersistence()) : new MqttClient(HOST, clientid);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+        connect();
     }
 
-    public static Boolean isConnected() {
+    public Boolean isConnected() {
         return client.isConnected();
     }
 
-    private static void connect() {
+    private void connect() {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(false);
         // 设置连接的用户名和密码
@@ -68,7 +72,7 @@ public class MyClient {
         }
     }
 
-    public static MqttDeliveryToken publish(String topic, MyMqttMessage message){
+    public MqttDeliveryToken publish(String topic, MyMqttMessage message) {
         try {
             log.info("message:{}" + GSON.toJson(message));
             return client.getTopic(topic).publish(message.getPayload(), message.getQos(), message.isRetained());
@@ -78,7 +82,7 @@ public class MyClient {
         return null;
     }
 
-    public static void consume(String topic){
+    public void consume(String topic) {
         try {
             client.subscribeWithResponse(topic, new MyIMqttMessageListener());
         } catch (MqttException e) {

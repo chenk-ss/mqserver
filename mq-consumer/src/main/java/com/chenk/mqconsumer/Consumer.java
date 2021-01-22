@@ -9,6 +9,16 @@ import util.MyClient;
 public class Consumer {
 
     public static void main(String[] args) {
-        new MyClient("CKConsumerTest", true).consume("CKTopicTest");
+//        new MyClient("CKConsumerTest1", true).consume("CKTopicTest");
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new MyClient("CKConsumerTest" + finalI, true).consume("CKTopicTest");
+                }
+            }).start();
+        }
     }
 }

@@ -13,22 +13,22 @@ public class PushCallback implements MqttCallback {
     public void connectionLost(Throwable e) {
         // 连接丢失后，在这里面进行重连
         log.error("连接断开，可以做重连");
-        while (!MyClient.isConnected()) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            log.error("---reconnect---");
-            try {
-                MyClient.client.reconnect();
-                log.info("---reconnect success---");
-                break;
-            } catch (MqttException ex) {
-                log.error("---reconnect failed---");
-                ex.printStackTrace();
-            }
-        }
+//        while (!MyClient.isConnected()) {
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException ex) {
+//                ex.printStackTrace();
+//            }
+//            log.error("---reconnect---");
+//            try {
+//                MyClient.client.reconnect();
+//                log.info("---reconnect success---");
+//                break;
+//            } catch (MqttException ex) {
+//                log.error("---reconnect failed---");
+//                ex.printStackTrace();
+//            }
+//        }
     }
 
     @Override
