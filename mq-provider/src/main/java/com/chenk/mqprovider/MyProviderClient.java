@@ -1,6 +1,6 @@
 package com.chenk.mqprovider;
 
-import util.MyClient;
+import util.MyProClient;
 
 /**
  * @Author chenk
@@ -8,20 +8,20 @@ import util.MyClient;
  */
 public class MyProviderClient {
 
-    private static MyClient myClient;
+    private static MyProClient myProClient;
 
     private MyProviderClient() {
 
     }
 
-    public static MyClient getMyProviderClinet() {
-        if (myClient == null) {
+    public static MyProClient getMyProviderClinet() {
+        if (myProClient == null) {
             synchronized (MyProviderClient.class) {
-                if (myClient == null) {
-                    myClient = new MyClient(true);
+                if (myProClient == null) {
+                    myProClient = new MyProClient();
                 }
             }
         }
-        return myClient;
+        return myProClient;
     }
 }

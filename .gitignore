@@ -2,6 +2,12 @@
 /mqserver.iml
 /mq-common/target/classes/
 /mq-common/mq-common.iml
+/mq-consumer/.mvn/wrapper/
+/mq-consumer/.gitignore
+/mq-consumer/mvnw
+/mq-consumer/mvnw.cmd
+/mq-common/target/classes/
+/mq-common/mq-common.iml
 /mq-provider/.mvn/wrapper/
 /mq-consumer/target/
 /mq-provider/mvnw.cmd

@@ -1,15 +1,18 @@
 package com.chenk.mqprovider.controller;
 
 import com.chenk.mqprovider.MyProviderClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.*;
 import pojo.MqMessage;
-import pojo.MyMqttMessage;
 import pojo.Result;
-import util.MyClient;
+import util.MyProClient;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
+import javax.jms.Topic;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,23 +21,47 @@ import java.util.Map;
  * @create 2020/12/23 17:08
  */
 @RestController
+@EnableScheduling
 @RequestMapping("/message")
 public class MessageController {
 
-    MyClient myClient = MyProviderClient.getMyProviderClinet();
+    MyProClient myClient = MyProviderClient.getMyProviderClinet();
 
     @PostMapping(value = "/send")
     public Result<String> publishTopic(@RequestBody MqMessage mqMessage) {
-        MyMqttMessage mqttMessage = new MyMqttMessage(1, true);
-        mqttMessage.setPayload(mqMessage.getMessage().getBytes());
-        if (!"".equals(mqMessage.getClientId())) {
-            Map map = new HashMap<>();
-            map.put("_CLIENTID", mqMessage.getClientId());
-            map.put("MESSAGE", mqMessage.getMessage());
-            mqttMessage.setPayload(map.toString().getBytes());
+        try {
+            myClient.send(mqMessage.getTopic(), mqMessage.getMessage(), mqMessage.getClientId());
+        } catch (JMSException e) {
+            e.printStackTrace();
         }
-        myClient.publish(mqMessage.getTopic(), mqttMessage);
         return new Result("发送成功", true, "");
+    }
+
+    @Scheduled(fixedRate=120000)
+    public void sc() throws JMSException {
+        myClient.send("heartBeat", "1", null);
+    }
+
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
+
+    @PostMapping("/send2")
+    public void send(@RequestParam("message") String msg, @RequestParam("clientId") String clientId) {
+        // 指定消息发送的目的地及内容
+        System.out.println("@@@@@@@@@@@@@@" + msg);
+        String topicName = "CKTopicTest";
+        Topic topic = new Topic() {
+            @Override
+            public String getTopicName() throws JMSException {
+                return topicName;
+            }
+        };
+        Map<String, String> map = new HashMap<>();
+        map.put("msg", msg);
+        if (clientId != null && !"".equals(clientId)) {
+            map.put("_CLIENTID", clientId);
+        }
+        this.jmsMessagingTemplate.convertAndSend(topic, msg);
     }
 
 }

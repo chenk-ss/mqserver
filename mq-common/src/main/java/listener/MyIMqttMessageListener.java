@@ -9,7 +9,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class MyIMqttMessageListener implements IMqttMessageListener {
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
+    public void messageArrived(String topic, MqttMessage message) {
         System.out.println("---TOPIC---:" + topic);
         System.out.println("---MqttMessage---:" + new String(message.getPayload()));
     }

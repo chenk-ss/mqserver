@@ -1,0 +1,50 @@
+package util;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+
+import javax.jms.*;
+
+/**
+ * @Author chenk
+ * @create 2021/1/23 16:06
+ */
+public class MyProClient {
+    private static final String ACTIVEMQ_URL = "tcp://127.0.0.1:61616?keepAlive=true";
+    public String clientid = "chenk";
+    private String userName = "admin";
+    private String passWord = "a123";
+
+    private MessageProducer producer;
+    private Connection connection;
+    private Session session;
+
+    public void conn() throws JMSException {
+//        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_URL);
+//        connection = activeMQConnectionFactory.createConnection(userName, passWord);
+        connection = ActiveMQPoolsUtil.getConnection();
+//        connection.setClientID(clientid);
+//        connection.start();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    }
+
+    public void send(String topic, String message, String clientId) throws JMSException {
+        if (session == null) {
+            conn();
+        }
+        Destination destination = session.createTopic(topic);
+        producer = session.createProducer(destination);
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+        TextMessage textMessage = session.createTextMessage(message);
+        if (clientId != null && !"".equals(clientId)) {
+            textMessage.setStringProperty("_CLIENTID", clientId);
+        }
+        producer.send(textMessage);
+        System.out.println("已发送的消息：" + textMessage.getText());
+    }
+
+    public void close() throws JMSException {
+        producer.close();
+        session.close();
+        connection.close();
+    }
+}

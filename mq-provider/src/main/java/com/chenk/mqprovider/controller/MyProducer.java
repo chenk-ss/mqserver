@@ -18,7 +18,7 @@ public class MyProducer {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_URL);
         // 创建连接
         Connection connection = activeMQConnectionFactory.createConnection("admin", "a123");
-        connection.setClientID("test");
+        connection.setClientID("chenk");
         // 打开连接
         connection.start();
         // 创建会话
@@ -31,8 +31,8 @@ public class MyProducer {
         // 向队列推送10个文本消息数据
         for (int i = 1; i <= 1; i++) {
             // 创建文本消息
-            TextMessage message = session.createTextMessage("第" + i + "555个文本消息");
-            message.setStringProperty("_CLIENTID","CKConsumerTest1");
+            TextMessage message = session.createTextMessage("第" + i + "123个文本消息");
+            message.setStringProperty("_CLIENTID","CKConsumerTest2389");
             //发送消息
             producer.send(message);
             //在本地打印消息
