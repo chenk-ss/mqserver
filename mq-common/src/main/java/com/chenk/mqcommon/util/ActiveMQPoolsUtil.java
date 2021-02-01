@@ -1,4 +1,4 @@
-package util;
+package com.chenk.mqcommon.util;
 
 import javax.jms.JMSException;
 

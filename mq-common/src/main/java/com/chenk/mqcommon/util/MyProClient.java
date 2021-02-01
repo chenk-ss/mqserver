@@ -1,4 +1,4 @@
-package util;
+package com.chenk.mqcommon.util;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -10,20 +10,20 @@ import javax.jms.*;
  */
 public class MyProClient {
     private static final String ACTIVEMQ_URL = "tcp://127.0.0.1:61616?keepAlive=true";
-    public String clientid = "chenk";
+    public String clientid = "admin";
     private String userName = "admin";
-    private String passWord = "a123";
+    private String passWord = "2188a3b0-c071-4159-922b-ac8ad1ab2f44";
 
     private MessageProducer producer;
     private Connection connection;
     private Session session;
 
     public void conn() throws JMSException {
-//        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_URL);
-//        connection = activeMQConnectionFactory.createConnection(userName, passWord);
-        connection = ActiveMQPoolsUtil.getConnection();
-//        connection.setClientID(clientid);
-//        connection.start();
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_URL);
+        connection = activeMQConnectionFactory.createConnection(userName, passWord);
+//        connection = ActiveMQPoolsUtil.getConnection();
+        connection.setClientID(clientid);
+        connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
 

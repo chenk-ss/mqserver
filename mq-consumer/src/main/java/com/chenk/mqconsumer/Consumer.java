@@ -1,6 +1,6 @@
 package com.chenk.mqconsumer;
 
-import util.MyClient;
+import com.chenk.mqcommon.util.MyClient;
 
 /**
  * @Author chenk
@@ -11,7 +11,7 @@ public class Consumer {
     public static void main(String[] args) {
 //        new MyClient("CKConsumerTest1", true).consume("CKTopicTest");
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             int finalI = i;
             new Thread(new Runnable() {
                 @Override

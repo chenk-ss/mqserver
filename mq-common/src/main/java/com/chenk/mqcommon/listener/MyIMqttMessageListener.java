@@ -1,4 +1,4 @@
-package listener;
+package com.chenk.mqcommon.listener;
 
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;

@@ -1,15 +1,13 @@
-package util;
+package com.chenk.mqcommon.util;
 
+import com.chenk.mqcommon.listener.MyIMqttMessageListener;
 import com.google.gson.Gson;
-import listener.MyIMqttMessageListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import pojo.MyMqttMessage;
 
 /**
  * @Author chenk

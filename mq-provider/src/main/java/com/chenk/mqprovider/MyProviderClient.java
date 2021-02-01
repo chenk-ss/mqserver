@@ -1,6 +1,6 @@
 package com.chenk.mqprovider;
 
-import util.MyProClient;
+import com.chenk.mqcommon.util.MyProClient;
 
 /**
  * @Author chenk
