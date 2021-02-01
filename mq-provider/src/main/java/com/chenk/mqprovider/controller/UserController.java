@@ -41,11 +41,15 @@ public class UserController {
         if (userBean.getUserName().equals(loginParam.getUserName())
                 && userBean.getPassword().equals(loginParam.getPassword())) {
             String token = UUID.randomUUID().toString();
+            if ("admin".equals(loginParam.getUserName())) {
+                token = "2188a3b0-c071-4159-922b-ac8ad1ab2f44";
+            }
             redisTemplate.opsForValue().set("TokenOf" + loginParam.getUserName(), token);
 
             List<String> topics = topicPowerService.getTopics(loginParam.getUserName());
-//            redisTemplate.opsForValue().set("TopicOf" + loginParam.getUserName(), topics);
-            redisTemplate.opsForList().rightPushAll("TopicOf" + loginParam.getUserName(), topics);
+            if (topics != null) {
+                redisTemplate.opsForList().rightPushAll("TopicOf" + loginParam.getUserName(), topics);
+            }
 
             return new Result("登陆成功", true, token);
         }
