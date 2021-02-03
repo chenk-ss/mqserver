@@ -34,7 +34,7 @@ public class MessageController {
         return new Result("发送成功", true, "");
     }
 
-    @Scheduled(fixedRate=120000)
+    @Scheduled(fixedRate = 120000)
     public void sc() throws JMSException {
         myClient.send("heartBeat", "1", null);
     }

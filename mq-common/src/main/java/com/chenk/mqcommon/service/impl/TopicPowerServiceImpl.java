@@ -32,7 +32,7 @@ public class TopicPowerServiceImpl implements TopicPowerService {
             return null;
         }
         List<String> result = new ArrayList<>();
-        beans.stream().filter(bean -> result.add(bean.getTopic()));
+        beans.stream().forEach(bean -> result.add(bean.getTopic()));
         return result;
     }
 }

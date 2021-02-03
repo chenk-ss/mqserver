@@ -23,7 +23,7 @@ public class MyClient {
     private String HOST = "tcp://127.0.0.1:1883";
     public String clientid = "chenk";
     private String userName = "admin";
-    private String passWord = "a123";
+    private String passWord = "2188a3b0-c071-4159-922b-ac8ad1ab2f44";
 
     public MyClient(String clientid, boolean retained) {
         try {

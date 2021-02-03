@@ -3,6 +3,7 @@ package com.chenk.mqcommon.util;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
+import javax.jms.IllegalStateException;
 
 /**
  * @Author chenk
@@ -31,7 +32,13 @@ public class MyProClient {
         if (session == null) {
             conn();
         }
-        Destination destination = session.createTopic(topic);
+        Destination destination;
+        try {
+            destination = session.createTopic(topic);
+        } catch (IllegalStateException e){
+            conn();
+            destination = session.createTopic(topic);
+        }
         producer = session.createProducer(destination);
         producer.setDeliveryMode(DeliveryMode.PERSISTENT);
         TextMessage textMessage = session.createTextMessage(message);
