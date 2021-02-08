@@ -19,7 +19,7 @@ public class MyProClient {
     private Connection connection;
     private Session session;
 
-    public void conn() throws JMSException {
+    public synchronized void conn() throws JMSException {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_URL);
         connection = activeMQConnectionFactory.createConnection(userName, passWord);
 //        connection = ActiveMQPoolsUtil.getConnection();
@@ -28,19 +28,19 @@ public class MyProClient {
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
 
-    public void send(String topic, String message, String clientId) throws JMSException {
+    public void send(String topic, String message, String clientId, Boolean retain) throws JMSException {
         if (session == null) {
             conn();
         }
         Destination destination;
         try {
             destination = session.createTopic(topic);
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             conn();
             destination = session.createTopic(topic);
         }
         producer = session.createProducer(destination);
-        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+        producer.setDeliveryMode(retain ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT);
         TextMessage textMessage = session.createTextMessage(message);
         if (clientId != null && !"".equals(clientId)) {
             textMessage.setStringProperty("_CLIENTID", clientId);

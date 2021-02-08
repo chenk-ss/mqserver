@@ -2,7 +2,6 @@ package com.chenk.mqprovider.controller;
 
 import com.chenk.mqprovider.MyProviderClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,15 +26,10 @@ public class MessageController {
     @PostMapping(value = "/send")
     public Result<String> publishTopic(@RequestBody MqMessage mqMessage) {
         try {
-            myClient.send(mqMessage.getTopic(), mqMessage.getMessage(), mqMessage.getClientId());
+            myClient.send(mqMessage.getTopic(), mqMessage.getMessage(), mqMessage.getClientId(), mqMessage.getRetain());
         } catch (JMSException e) {
             e.printStackTrace();
         }
         return new Result("发送成功", true, "");
-    }
-
-    @Scheduled(fixedRate = 120000)
-    public void sc() throws JMSException {
-        myClient.send("heartBeat", "1", null);
     }
 }
