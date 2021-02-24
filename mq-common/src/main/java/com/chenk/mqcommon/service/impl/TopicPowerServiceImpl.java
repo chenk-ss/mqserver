@@ -35,4 +35,23 @@ public class TopicPowerServiceImpl implements TopicPowerService {
         beans.stream().forEach(bean -> result.add(bean.getTopic()));
         return result;
     }
+
+    @Override
+    public void add(String userId, String userName, String topic) {
+        TopicPowerBean bean = new TopicPowerBean();
+        bean.setUserName(userName);
+        bean.setUserid(userId);
+        bean.setTopic(topic);
+        bean.setSend(true);
+        topicPowerRepository.save(bean);
+    }
+
+    @Override
+    public void remove(String userName, String topic) {
+        TopicPowerBean bean = new TopicPowerBean();
+        bean.setUserName(userName);
+        bean.setTopic(topic);
+        bean.setSend(true);
+        topicPowerRepository.delete(bean);
+    }
 }

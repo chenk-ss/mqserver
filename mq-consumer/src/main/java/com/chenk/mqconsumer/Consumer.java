@@ -9,14 +9,12 @@ import com.chenk.mqcommon.util.MyClient;
 public class Consumer {
 
     public static void main(String[] args) {
-//        new MyClient("CKConsumerTest1", true).consume("CKTopicTest");
-
         for (int i = 0; i < 1; i++) {
             int finalI = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    new MyClient("CKConsumerTest" + finalI, true).consume("CKTopicTest");
+                    new MyClient("CKConsumerTest" + finalI).consume("CKTopicTest");
                 }
             }).start();
         }

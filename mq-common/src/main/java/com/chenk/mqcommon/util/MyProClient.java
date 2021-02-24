@@ -10,7 +10,7 @@ import javax.jms.IllegalStateException;
  * @create 2021/1/23 16:06
  */
 public class MyProClient {
-    private static final String ACTIVEMQ_URL = "tcp://127.0.0.1:61616?keepAlive=true";
+    private static final String ACTIVEMQ_URL = "failover:(tcp://127.0.0.1:61616)?randomize=true";
     public String clientid = "admin";
     private String userName = "admin";
     private String passWord = "2188a3b0-c071-4159-922b-ac8ad1ab2f44";

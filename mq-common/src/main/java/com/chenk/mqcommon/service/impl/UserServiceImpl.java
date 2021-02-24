@@ -3,7 +3,7 @@ package com.chenk.mqcommon.service.impl;
 import com.chenk.mqcommon.bean.UserBean;
 import com.chenk.mqcommon.service.UserService;
 import com.chenk.mqcommon.repository.UserRepository;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,5 +28,13 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return beans.get(0);
+    }
+
+    @Override
+    public List<UserBean> query(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "id");
+        Page<UserBean> list = userRepository.findAll(pageable);
+        list.get().forEach(userBean -> userBean.setPassword(""));
+        return list.toList();
     }
 }

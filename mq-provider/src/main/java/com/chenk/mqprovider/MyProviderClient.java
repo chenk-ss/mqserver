@@ -8,7 +8,7 @@ import com.chenk.mqcommon.util.MyProClient;
  */
 public class MyProviderClient {
 
-    private static MyProClient myProClient;
+    private volatile static MyProClient myProClient;
 
     private MyProviderClient() {
 

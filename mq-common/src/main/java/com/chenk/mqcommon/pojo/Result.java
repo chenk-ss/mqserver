@@ -17,4 +17,9 @@ public class Result<T> {
         this.success = success;
         this.data = data;
     }
+
+    public Result(T data) {
+        this.success = true;
+        this.data = data;
+    }
 }
