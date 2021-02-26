@@ -30,6 +30,7 @@ public class MyClient {
     private volatile static int num = 0;
     private String clientId;
     private List<String> topics = new ArrayList<>();
+
     public MyClient(String clientid) {
         this.clientId = clientid;
         int i = 0;
@@ -61,10 +62,10 @@ public class MyClient {
         client.connect(options);
     }
 
-    public void consume(String topic) {
+    public void consume(String[] topic) {
         try {
-            topics.add(topic);
-            client.subscribeWithResponse(topic, new MyIMqttMessageListener());
+            topics.addAll(Arrays.asList(topic));
+            client.subscribe(topic);
         } catch (MqttException e) {
             e.printStackTrace();
         }

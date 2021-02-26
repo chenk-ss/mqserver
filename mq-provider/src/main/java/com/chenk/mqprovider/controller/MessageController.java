@@ -29,6 +29,7 @@ public class MessageController {
             myClient.send(mqMessage.getTopic(), mqMessage.getMessage(), mqMessage.getClientId(), mqMessage.getRetain());
         } catch (JMSException e) {
             e.printStackTrace();
+            return new Result("发送失败:" + e.getMessage(), false, "");
         }
         return new Result("发送成功", true, "");
     }

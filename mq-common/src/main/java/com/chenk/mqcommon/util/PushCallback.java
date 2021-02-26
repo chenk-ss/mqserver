@@ -26,9 +26,7 @@ public class PushCallback implements MqttCallback {
         }
         MyClient myClient = new MyClient(mqttClient.getClientId());
         if (topics.size() > 0) {
-            for (String topic : topics) {
-                myClient.consume(topic);
-            }
+            myClient.consume((String[]) topics.toArray());
         }
         log.info("重连结束");
     }
@@ -40,6 +38,8 @@ public class PushCallback implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) {
+        Thread th = Thread.currentThread();
+        log.info(th.getName());
         log.info("接收消息主题 : " + topic);
         log.info("接收消息Qos : " + message.getQos());
         log.info("接收消息内容 : " + new String(message.getPayload()));

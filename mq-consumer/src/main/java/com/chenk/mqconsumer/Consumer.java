@@ -11,12 +11,14 @@ public class Consumer {
     public static void main(String[] args) {
         for (int i = 0; i < 1; i++) {
             int finalI = i;
-            new Thread(new Runnable() {
+            Thread th = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    new MyClient("CKConsumerTest" + finalI).consume("CKTopicTest");
+                    new MyClient("CKConsumerTest" + finalI).consume(new String[]{"CKTopicTest", "CKTopicTest1"});
                 }
-            }).start();
+            });
+            th.setName("CKConsumerTest" + finalI);
+            th.start();
         }
     }
 }
